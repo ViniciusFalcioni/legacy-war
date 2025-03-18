@@ -6,7 +6,7 @@
 
 ---
 
-## Estória
+## História
 Em um mundo devastado pela guerra, duas facções rivais disputam o controle de um recurso valioso conhecido como **Cristal da Evolução**, capaz de aprimorar tropas e estruturas. O jogador assume o papel de um comandante estrategista, liderando exércitos de stickmen para destruir a base inimiga e garantir a supremacia do seu reino.
 
 Com o avanço da batalha, o jogador desbloqueia novos equipamentos, unidades e fortifica sua base para resistir aos ataques adversários. O destino da guerra será definido por suas estratégias e escolhas.
