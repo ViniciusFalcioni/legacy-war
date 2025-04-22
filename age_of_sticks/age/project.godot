@@ -1,0 +1,37 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Age"
+run/main_scene="uid://cyro0pc1kjeqi"
+config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/bg_color=Color(0.652344, 0.652344, 0.652344, 1)
+boot_splash/image="uid://dr0sov0mnludb"
+config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="viewport"
+
+[layer_names]
+
+2d_physics/layer_1="Ground"
+2d_physics/layer_2="Character"
+2d_physics/layer_3="Hurtbox"
+2d_physics/layer_4="Hitbox"
+2d_physics/layer_5="Cave"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

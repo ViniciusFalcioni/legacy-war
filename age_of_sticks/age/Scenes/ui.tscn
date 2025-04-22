@@ -1,0 +1,212 @@
+[gd_scene load_steps=9 format=3 uid="uid://c4cwrg7boaokw"]
+
+[ext_resource type="Texture2D" uid="uid://6lfgicuihy82" path="res://Sprites/Panel.png" id="1_nf4gj"]
+[ext_resource type="Script" uid="uid://1yth5fd4jqjf" path="res://Scripts/ui.gd" id="1_q7pk6"]
+[ext_resource type="Texture2D" uid="uid://cfnff2lhdimhk" path="res://Sprites/button_stick.png" id="2_2246s"]
+[ext_resource type="Texture2D" uid="uid://dv1v2v2cvly07" path="res://Sprites/white.png" id="2_qdvrb"]
+[ext_resource type="Texture2D" uid="uid://c3le72omk5q66" path="res://Sprites/button_super_stick.png" id="4_q7pk6"]
+[ext_resource type="AudioStream" uid="uid://qlp0iuj2qgei" path="res://Sounds/Click.mp3" id="6_m78vo"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q7pk6"]
+texture = ExtResource("1_nf4gj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2246s"]
+texture = ExtResource("1_nf4gj")
+
+[node name="UI" type="Control" node_paths=PackedStringArray("basic_button", "basic_button_texture", "super_button", "super_button_texture", "button_sound", "money_label", "level_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q7pk6")
+basic_button = NodePath("Store/VBoxContainer/HBoxContainer/BasicButton")
+basic_button_texture = NodePath("Store/VBoxContainer/HBoxContainer/BasicButton/TextureProgressBar")
+super_button = NodePath("Store/VBoxContainer/HBoxContainer/SuperButton")
+super_button_texture = NodePath("Store/VBoxContainer/HBoxContainer/SuperButton/TextureProgressBar")
+button_sound = NodePath("ButtonSound")
+money_label = NodePath("PlayerBelongings/VBoxContainer/HBoxContainer/ColorRect/Money")
+level_label = NodePath("PlayerBelongings/VBoxContainer/HBoxContainer2/ColorRect/Level")
+
+[node name="PlayerBelongings" type="Panel" parent="."]
+custom_minimum_size = Vector2(400, 150)
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_q7pk6")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerBelongings"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerBelongings/VBoxContainer"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="PlayerBelongings/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(175, 65)
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MoneyLabel" type="RichTextLabel" parent="PlayerBelongings/VBoxContainer/HBoxContainer/ColorRect"]
+custom_minimum_size = Vector2(100, 65)
+layout_mode = 2
+offset_left = 4.0
+offset_right = 104.0
+offset_bottom = 65.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+bbcode_enabled = true
+text = "
+   [color=gold]GRANA ($):[/color]"
+
+[node name="Money" type="RichTextLabel" parent="PlayerBelongings/VBoxContainer/HBoxContainer/ColorRect"]
+custom_minimum_size = Vector2(200, 65)
+layout_mode = 2
+offset_left = 108.0
+offset_right = 308.0
+offset_bottom = 65.0
+size_flags_horizontal = 0
+bbcode_enabled = true
+text = "
+[color=gold]0[/color]
+"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PlayerBelongings/VBoxContainer"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="PlayerBelongings/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(100, 65)
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="LevelLabel" type="RichTextLabel" parent="PlayerBelongings/VBoxContainer/HBoxContainer2/ColorRect"]
+custom_minimum_size = Vector2(65, 65)
+layout_mode = 2
+offset_left = 4.0
+offset_right = 69.0
+offset_bottom = 65.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+bbcode_enabled = true
+text = "
+   [color=red]LEVEL:[/color]"
+
+[node name="Level" type="RichTextLabel" parent="PlayerBelongings/VBoxContainer/HBoxContainer2/ColorRect"]
+custom_minimum_size = Vector2(200, 65)
+layout_mode = 2
+offset_left = 73.0
+offset_right = 273.0
+offset_bottom = 65.0
+size_flags_horizontal = 0
+bbcode_enabled = true
+text = "
+[color=red]0[/color]
+"
+
+[node name="Store" type="Panel" parent="."]
+custom_minimum_size = Vector2(400, 150)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxTexture_2246s")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Store"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="ColorRect" type="ColorRect" parent="Store/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="StoreLabel" type="RichTextLabel" parent="Store/VBoxContainer/ColorRect"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center][color=gold]LOJA[/color][/center]"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Store/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="BasicButton" type="TextureButton" parent="Store/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+tooltip_text = "Custa  $200"
+texture_normal = ExtResource("2_2246s")
+texture_pressed = ExtResource("2_2246s")
+texture_hover = ExtResource("2_2246s")
+texture_disabled = ExtResource("2_2246s")
+texture_focused = ExtResource("2_2246s")
+stretch_mode = 3
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Store/VBoxContainer/HBoxContainer/BasicButton"]
+modulate = Color(0, 0, 0, 0.32549)
+z_index = 2
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+fill_mode = 4
+nine_patch_stretch = true
+texture_progress = ExtResource("2_qdvrb")
+
+[node name="SuperButton" type="TextureButton" parent="Store/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 8
+tooltip_text = "Custa $400 + Lvl 2"
+texture_normal = ExtResource("4_q7pk6")
+texture_pressed = ExtResource("4_q7pk6")
+texture_hover = ExtResource("4_q7pk6")
+texture_disabled = ExtResource("4_q7pk6")
+texture_focused = ExtResource("4_q7pk6")
+stretch_mode = 3
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Store/VBoxContainer/HBoxContainer/SuperButton"]
+modulate = Color(0, 0, 0, 0.32549)
+z_index = 2
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+fill_mode = 4
+nine_patch_stretch = true
+texture_progress = ExtResource("2_qdvrb")
+
+[node name="ButtonSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_m78vo")
+
+[connection signal="pressed" from="Store/VBoxContainer/HBoxContainer/BasicButton" to="." method="_on_basic_button_pressed"]
+[connection signal="pressed" from="Store/VBoxContainer/HBoxContainer/SuperButton" to="." method="_on_super_button_pressed"]

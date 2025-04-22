@@ -1,0 +1,79 @@
+[gd_scene load_steps=9 format=3 uid="uid://u0pt6il0we7c"]
+
+[ext_resource type="Script" uid="uid://clp1725n6gm03" path="res://Scripts/cave.gd" id="1_02alt"]
+[ext_resource type="Texture2D" uid="uid://wt014nhnuqt" path="res://Sprites/Scenario/Cave.png" id="1_aksbv"]
+[ext_resource type="AudioStream" uid="uid://b4u1pvgcajq1x" path="res://Sounds/CaveDestroyed.wav" id="3_yfbkh"]
+[ext_resource type="AudioStream" uid="uid://cxwdjnrhi0je7" path="res://Sounds/Cave Hit.wav" id="4_g4geh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aksbv"]
+size = Vector2(40, 150)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_02alt"]
+size = Vector2(40, 150)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_02alt"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3usej"]
+bg_color = Color(0.730469, 0, 0.0440392, 1)
+
+[node name="Cave" type="StaticBody2D" node_paths=PackedStringArray("life_bar", "spawn_timer", "spawn_point", "collision", "hurtbox", "visuals", "destroy_sound", "hit_sound")]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_02alt")
+life_bar = NodePath("ProgressBar")
+spawn_timer = NodePath("SpawnTimer")
+spawn_point = NodePath("SpawnPoint")
+collision = NodePath("CollisionShape2D")
+hurtbox = NodePath("Hurtbox")
+visuals = NodePath("Sprite2D")
+destroy_sound = NodePath("DestroyedSound")
+hit_sound = NodePath("HitSound")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_aksbv")
+
+[node name="SpawnPoint" type="Marker2D" parent="."]
+position = Vector2(-56, 71)
+
+[node name="Basic" type="Node2D" parent="SpawnPoint"]
+
+[node name="Super" type="Node2D" parent="SpawnPoint"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-95, 62)
+shape = SubResource("RectangleShape2D_aksbv")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+position = Vector2(-95, 62)
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_02alt")
+debug_color = Color(0.698039, 0.701961, 0, 0.419608)
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(40, 300)
+offset_left = -58.0
+offset_top = -405.0
+offset_right = -18.0
+offset_bottom = -105.0
+theme_override_styles/background = SubResource("StyleBoxFlat_02alt")
+theme_override_styles/fill = SubResource("StyleBoxFlat_3usej")
+max_value = 1000.0
+value = 900.0
+rounded = true
+fill_mode = 3
+
+[node name="SpawnTimer" type="Timer" parent="."]
+process_callback = 0
+
+[node name="DestroyedSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_yfbkh")
+
+[node name="HitSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_g4geh")
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

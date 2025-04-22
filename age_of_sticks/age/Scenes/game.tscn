@@ -1,0 +1,149 @@
+[gd_scene load_steps=11 format=3 uid="uid://b5ed7a0ylnghv"]
+
+[ext_resource type="PackedScene" uid="uid://c4cwrg7boaokw" path="res://Scenes/ui.tscn" id="1_ebmjs"]
+[ext_resource type="Texture2D" uid="uid://dvl2cvbkgc5j4" path="res://Sprites/Background.png" id="1_qxrlw"]
+[ext_resource type="Script" uid="uid://d1bkdqfd7kvne" path="res://Scripts/camera_2d.gd" id="3_3dryh"]
+[ext_resource type="Script" uid="uid://cm07lmi33ji4n" path="res://Scripts/ending.gd" id="3_wowpa"]
+[ext_resource type="PackedScene" uid="uid://u0pt6il0we7c" path="res://Scenes/cave.tscn" id="4_3dryh"]
+[ext_resource type="AudioStream" uid="uid://qlp0iuj2qgei" path="res://Sounds/Click.mp3" id="4_i6g32"]
+[ext_resource type="AudioStream" uid="uid://1su8fw0l1dh4" path="res://Sounds/Soundtrack.wav" id="5_1l0tm"]
+[ext_resource type="AudioStream" uid="uid://b1hhnm7dwoww3" path="res://Sounds/Win.wav" id="6_h4fw4"]
+[ext_resource type="AudioStream" uid="uid://nk25ft50f61q" path="res://Sounds/Lose.wav" id="7_ldgsr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2poj3"]
+size = Vector2(1920, 20)
+
+[node name="Game" type="Node2D"]
+
+[node name="Background" type="TextureRect" parent="."]
+texture_repeat = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -968.0
+offset_top = -377.0
+offset_right = 2912.0
+offset_bottom = 1155.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_qxrlw")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" parent="CanvasLayer" node_paths=PackedStringArray("left_cave") instance=ExtResource("1_ebmjs")]
+left_cave = NodePath("../../LeftCave")
+
+[node name="Ending" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("ending_label", "click_sound", "win_sound", "lose_sound")]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_wowpa")
+ending_label = NodePath("VBoxContainer/RichTextLabel")
+click_sound = NodePath("VBoxContainer/ClickSound")
+win_sound = NodePath("../../Win")
+lose_sound = NodePath("../../Lose")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Ending"]
+modulate = Color(0, 0, 0, 0.341176)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Ending"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -71.5
+offset_top = -33.0
+offset_right = 71.5
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Ending/VBoxContainer"]
+modulate = Color(0, 1, 0.419811, 1)
+custom_minimum_size = Vector2(1000, 200)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 150
+bbcode_enabled = true
+text = "[center]PERDEU[/center]"
+scroll_active = false
+
+[node name="Retry" type="Button" parent="CanvasLayer/Ending/VBoxContainer"]
+custom_minimum_size = Vector2(500, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 50
+text = "Jogar Novamente"
+
+[node name="Menu" type="Button" parent="CanvasLayer/Ending/VBoxContainer"]
+custom_minimum_size = Vector2(500, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 50
+text = "Voltar ao Menu"
+
+[node name="ClickSound" type="AudioStreamPlayer" parent="CanvasLayer/Ending/VBoxContainer"]
+stream = ExtResource("4_i6g32")
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(0, 360)
+collision_mask = 2
+
+[node name="FloorCollision" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("RectangleShape2D_2poj3")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("5_1l0tm")
+autoplay = true
+bus = &"Music"
+
+[node name="Win" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("6_h4fw4")
+autoplay = true
+bus = &"Music"
+
+[node name="Lose" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("7_ldgsr")
+autoplay = true
+bus = &"Music"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(320, 0)
+limit_left = -965
+limit_right = 965
+script = ExtResource("3_3dryh")
+
+[node name="RightCave" parent="." node_paths=PackedStringArray("ui") instance=ExtResource("4_3dryh")]
+position = Vector2(871, 215)
+ui = NodePath("../CanvasLayer/UI")
+
+[node name="LeftCave" parent="." node_paths=PackedStringArray("ui") instance=ExtResource("4_3dryh")]
+position = Vector2(-873, 211)
+ui = NodePath("../CanvasLayer/UI")
+team = "Left"
+
+[connection signal="pressed" from="CanvasLayer/Ending/VBoxContainer/Retry" to="CanvasLayer/Ending" method="_on_retry_pressed"]
+[connection signal="pressed" from="CanvasLayer/Ending/VBoxContainer/Menu" to="CanvasLayer/Ending" method="_on_menu_pressed"]
+[connection signal="cave_destroyed" from="RightCave" to="CanvasLayer/Ending" method="_on_cave_destroyed"]
+[connection signal="cave_destroyed" from="LeftCave" to="CanvasLayer/Ending" method="_on_cave_destroyed"]
